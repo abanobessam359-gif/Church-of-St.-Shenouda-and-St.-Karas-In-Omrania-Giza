@@ -11,3 +11,11 @@ const verses = [
 // اختيار آية عشوائية
 const randomVerse = verses[Math.floor(Math.random() * verses.length)];
 document.getElementById("verse").innerText = randomVerse;
+
+
+// منع الكليك يمين على الصور فقط
+document.addEventListener("contextmenu", function(e){
+  if (e.target.tagName === "IMG") {
+    e.preventDefault();
+  }
+});
