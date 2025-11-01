@@ -237,6 +237,29 @@ const verses = [
 
 ];
 
+
+// ====== دوال مساعدة ======
+    function daysSinceEpoch(date) {
+      // تاريخ عند منتصف الليل UTC لتجنب فروق التوقيت
+      const msPerDay = 24 * 60 * 60 * 1000;
+      const utcMidnight = Date.UTC(date.getFullYear(), date.getMonth(), date.getDate());
+      return Math.floor(utcMidnight / msPerDay);
+    }
+
+    function getTodayKeyString(date) {
+      // سلسلة للعرض: YYYY-MM-DD
+      return date.toLocaleDateString('en-CA'); // en-CA يعطي YYYY-MM-DD
+    }
+
+    // ====== طريقة اختيار آية اليوم (ثابتة لكل تاريخ) ======
+    function pickVerseForDate(date) {
+      if (!Array.isArray(verses) || verses.length === 0) {
+        return { text: "لا توجد آيات مضافة بعد.", ref: "" };
+      }
+      const dayNum = daysSinceEpoch(date);
+      const idx = ((dayNum % verses.length) + verses.length) % verses.length; // تأكد من موجب
+      return verses[idx];
+    }
 // اختيار آية عشوائية
 const randomVerse = verses[Math.floor(Math.random() * verses.length)];
 document.getElementById("verse").innerText = randomVerse;
